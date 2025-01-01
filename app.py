@@ -12,7 +12,7 @@ def setup_chrome_options():
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.add_argument("--disable-gpu")
-    # chrome_options.binary_location = '/usr/bin/chromium-browser'
+    chrome_options.binary_location = '/usr/bin/chromium-browser'
     return chrome_options
 
 def scrape_elements(url):
