@@ -2,6 +2,10 @@ import streamlit as st
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+
+from selenium.webdriver.chrome.service import Service as ChromeService
+from webdriver_manager.chrome import ChromeDriverManager
+
 import pandas as pd
 import time
 import json
@@ -18,7 +22,8 @@ def setup_chrome_options():
 def scrape_elements(url):
     try:
         chrome_options = setup_chrome_options()
-        driver = webdriver.Chrome(options=chrome_options)
+        service = ChromeService('/usr/bin/chromedriver')  # Specify the path for Streamlit Cloud
+        driver = webdriver.Chrome(service=service, options=chrome_options)
         
         with st.spinner(f"Accessing URL: {url}"):
             driver.get(url)
