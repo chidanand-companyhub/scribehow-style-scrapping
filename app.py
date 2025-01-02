@@ -1,29 +1,21 @@
 import streamlit as st
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
-
-from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
-
 import pandas as pd
 import time
 import json
 
-def setup_chrome_options():
-    chrome_options = Options()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
-    chrome_options.add_argument("--disable-gpu")
-    chrome_options.binary_location = '/usr/bin/chromium-browser'
-    return chrome_options
+def setup_driver():
+    options = uc.ChromeOptions()
+    options.add_argument('--headless')
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+    driver = uc.Chrome(options=options)
+    return driver
 
 def scrape_elements(url):
     try:
-        chrome_options = setup_chrome_options()
-        service = ChromeService('/usr/bin/chromedriver')  # Specify the path for Streamlit Cloud
-        driver = webdriver.Chrome(service=service, options=chrome_options)
+        driver = setup_driver()
         
         with st.spinner(f"Accessing URL: {url}"):
             driver.get(url)
